@@ -1,3 +1,4 @@
+##Timing:
 Saturday:
 Start time: 16:30
 Finished basic setup at 2000
