@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <TestRunParameters>
+    <Parameter name="web_host" value="https://www.bunnings.com.au" />
+    <Parameter name="web_db" value="DataSource=....." />
+  </TestRunParameters>
+</RunSettings>
