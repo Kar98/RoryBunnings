@@ -33,6 +33,17 @@ t-SQLt tests into a single spot. This is helpful when you are running the automa
 I chose 3 test cases, 1 to search for an item, 1 to check that recent searches are updated, 1 is to check if the popular searches are correct
 (I mocked the DB call I make). I think these are very common scenarios which are the best to automate. 
 
+When writing the test sceanrios I will target a particular area. It's impossible to automate everything, and so it's best to focus on the 
+high value areas. These typically are either very important user features or highly repetitive tasks that could save days of testing
+effort for other areas. 
+The tests should be able to be run independant of each other. This means that you can run them in parallel which saves significant time.
+This is especially important in an Agile environment where you are trying to get the feedback quickely back to the devs. If it takes
+too long to run these tests, then they will not want to be blocked by their slow running. 
+
+I will split the tests up into different classes, based on various features. This means that you can have different suites available
+to run. Eg, you could have a smoke test suite to do a shakeout of the enviornment, and a full integration suite when a new package has 
+been deployed and everything is ready for manual testing.
+
 # Architecture:
 PageObjects is how you interact with the page. Each page extends a base method and will have a series of fields that will have an 
 attribute associated with it. This attribute controls the findElement method. When the page is instantiated, it will use reflection

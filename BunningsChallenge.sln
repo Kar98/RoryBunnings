@@ -14,9 +14,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RunSettings", "RunSettings"
 		test.runsettings = test.runsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecflowTests", "Specflow\SpecflowTests.csproj", "{D8393619-23EB-4C34-9390-94C78C7FC9EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecflowTests", "Specflow\SpecflowTests.csproj", "{D8393619-23EB-4C34-9390-94C78C7FC9EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunnings.Website.Test.DBObjects", "Bunnings.Website.Test.DBObjects\Bunnings.Website.Test.DBObjects.csproj", "{34F038B8-AF9E-4BCB-9897-787B23EEE83F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FEDAD8E6-8629-4EC9-8375-A80AB565FA0F}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
