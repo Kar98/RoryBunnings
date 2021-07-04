@@ -24,6 +24,7 @@ namespace Bunnings.Website.Test.AutomationSuite
         [OneTimeSetUp]
         public void Initialise()
         {
+            // If NullReferenceException occurs, make sure the runsettings file has been set.
             if (d == null)
             {
                 host = TestContext.Parameters["web_host"];
