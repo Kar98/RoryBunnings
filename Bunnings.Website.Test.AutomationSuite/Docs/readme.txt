@@ -1,6 +1,11 @@
-﻿Start time: 16:30
-Finished basic setup at 1800
+﻿Saturday:
+Start time: 16:30
+Finished basic setup at 2000
+
+Sunday: 
 Started again 13:30
+504 at 15:00 :(
+
 
 Brief:
 Develop 3 test cases for the search functionality with an agile dev environment in mind.

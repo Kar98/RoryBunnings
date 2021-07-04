@@ -7,6 +7,7 @@ using System;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Bunnings.Website.Test.AutomationSuite.DBObjs;
+using System.Collections.Generic;
 
 namespace Bunnings.Website.Test.AutomationSuite
 {
@@ -18,21 +19,33 @@ namespace Bunnings.Website.Test.AutomationSuite
         private static string host;
         private string connStr;
 
+        private bool mobileTest = false;
+
         [OneTimeSetUp]
         public void Initialise()
         {
             if (d == null)
             {
+                host = TestContext.Parameters["web_host"];
+                connStr = TestContext.Parameters["web_db"];
+                this.mobileTest = TestContext.Parameters["is_mobile"].Contains("true") ? true : false;
+
                 SeleniumUtils.KillWebDrivers();
                 ChromeOptions co = new ChromeOptions();
+                if (this.mobileTest)
+                {
+                    // Add mobile
+                    co.EnableMobileEmulation("Galaxy S5");
+                }
                 d = new ChromeDriver(co);
                 co.AddArgument("-incognito");
 
-                //host = test.Properties["web_host"].ToString();
-                host = TestContext.Parameters["web_host"];
-                connStr = TestContext.Parameters["web_db"];
                 d.Navigate().GoToUrl(host);
-                d.Manage().Window.Maximize();
+                if (!this.mobileTest)
+                {
+                    d.Manage().Window.Maximize();
+                }
+                
             }
             else
             {
@@ -56,7 +69,7 @@ namespace Bunnings.Website.Test.AutomationSuite
         [Test]
         public void SearchForItem()
         {
-            SearchWidget search = new SearchWidget(d);
+            SearchWidget search = new SearchWidget(d, mobileTest);
             search.SearchForItem("conduit");
             SearchLandingPage landingPage = new SearchLandingPage(d);
 
@@ -71,7 +84,7 @@ namespace Bunnings.Website.Test.AutomationSuite
         {
             var searchTerm = "bbq";
 
-            SearchWidget search = new SearchWidget(d);
+            SearchWidget search = new SearchWidget(d, mobileTest);
             search.SearchForItem(searchTerm);
             new SearchLandingPage(d);// wait for landing page, otherwise we can get a StaleElement
             search.Refresh(); // Need to refresh
@@ -84,7 +97,7 @@ namespace Bunnings.Website.Test.AutomationSuite
         [Test]
         public void UsePopularSearches()
         {
-            SearchWidget search = new SearchWidget(d);
+            SearchWidget search = new SearchWidget(d, mobileTest);
             var frontEndSearchResults = search.GetPopularSearches();
 
             // Can do a test where we get the backend info from the DB (or wherever it's stored) and compare against the front end. 

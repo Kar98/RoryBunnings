@@ -3,5 +3,6 @@
   <TestRunParameters>
     <Parameter name="web_host" value="https://www.bunnings.com.au" />
     <Parameter name="web_db" value="DataSource=....." />
+    <Parameter name="is_mobile" value="true" />
   </TestRunParameters>
 </RunSettings>

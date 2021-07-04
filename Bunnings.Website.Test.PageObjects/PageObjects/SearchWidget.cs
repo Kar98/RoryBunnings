@@ -15,10 +15,12 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
         public IWebElement searchBox;
         [PageItem(XPath = "//button[@id='crossIcon']")]
         public IWebElement searchButton;
-        
-        public SearchWidget(IWebDriver driv) : base(driv, pageLocator: By.Id("header-search"))
-        {
 
+        private bool mobile;
+        
+        public SearchWidget(IWebDriver driv,bool mobile) : base(driv, pageLocator: By.Id("header-search"))
+        {
+            this.mobile = mobile;
         }
 
         public void OpenFlyout()
@@ -34,6 +36,10 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
 
         public void SearchForItem(string itemText)
         {
+            if (mobile)
+            {
+                driver.FindElement(By.XPath("//button[@aria-label='search']"));
+            }
             searchBox.SendKeys(itemText);
             Refresh(); // Need to call refresh, because the button is only displayed when text is entered.
             searchButton.Click();
