@@ -23,8 +23,11 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
 
         public void OpenFlyout()
         {
-            if()
-            searchBox.Click();
+            //If flyout not open, then open, otherwise load already opened flyout
+            if (driver.FindElementNoThrow(By.Id("flyout"),TimeSpan.FromSeconds(2)) == null)
+            {
+                searchBox.Click();
+            }
             new SearchFlyout(driver); // Do this to wait for the element to be loaded
             // Better than doing another wait.until(blah) as it will mean we need to change code in 2 spots.
         }
@@ -57,6 +60,7 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
             if (!flyout.IsRecentSearchMode())
             {
                 // Can also return empty List, depends on how you want to use this.
+                // Can also use a custom exception to filter out front end exceptions and selenium exceptions
                 throw new Exception("No recent searches have been done. Ensure a search has happened beforehand");
             }
             return flyout.GetRecentSearches();
@@ -76,7 +80,11 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
         {
             OpenFlyout();
             SearchFlyout flyout = new SearchFlyout(driver);
-
+            if (flyout.IsRecentSearchMode())
+            {
+                flyout.ClickClearRecentSearches();
+            }
+            return flyout.GetPopularSearches();
         }
     }
 
@@ -103,7 +111,7 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
             {
                 try
                 {
-                    var el = leftSection.FindElement(By.XPath("//button"));
+                    var el = leftSection.FindElement(By.XPath(".//button[contains(@class,'ClearSuggestionsContainer')]"));
                     return true;
                 }
                 catch (NoSuchElementException)
@@ -116,10 +124,18 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
         public void ClickClearRecentSearches()
         {
             clearRecentSearchButton.Click();
-            AutomationUtils.WaitForWithContext(driver, leftSection, By.XPath(".//div[contains(@class,'PopularRecentSuggestions')]]"));
+            AutomationUtils.WaitForWithContext(driver, leftSection, By.XPath(".//div[contains(@class,'PopularRecentSuggestions')]"));
         }
 
         public List<string> GetRecentSearches()
+        {
+            var searchItems = leftSection.FindElements(By.XPath(".//div[contains(@class,'terms')]")).ToList();
+            List<string> returnList = new List<string>();
+            searchItems.ForEach(e => returnList.Add(e.Text));
+            return returnList;
+        }
+
+        public List<string> GetPopularSearches()
         {
             var searchItems = leftSection.FindElements(By.XPath(".//div[contains(@class,'terms')]")).ToList();
             List<string> returnList = new List<string>();

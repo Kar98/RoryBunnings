@@ -7,6 +7,7 @@ namespace Bunnings.Website.Test.WebCommon.Objects
     public abstract class WebPageBase : PageBase
     {
         protected Uri webroot;
+        protected By pageLocator;
         public WebPageBase(
             IWebDriver driv,
             string WebRoot = null,
@@ -17,11 +18,16 @@ namespace Bunnings.Website.Test.WebCommon.Objects
             {
                 webroot = new Uri(WebRoot);
             }
+            this.pageLocator = pageLocator;
             Navigate();
             ValidateElement(pageLocator, timeout ?? TimeSpan.FromSeconds(20));
             Refresh();
         }
 
+        public By GetPageLocator()
+        {
+            return this.pageLocator;
+        }
         protected override void Navigate()
         {
             var pageAttribute = this.GetType().GetCustomAttribute(typeof(PageAttribute));

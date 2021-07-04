@@ -6,6 +6,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using Bunnings.Website.Test.AutomationSuite.DBObjs;
 
 namespace Bunnings.Website.Test.AutomationSuite
 {
@@ -15,6 +16,7 @@ namespace Bunnings.Website.Test.AutomationSuite
     {
         protected static IWebDriver d;
         private static string host;
+        private string connStr;
 
         [OneTimeSetUp]
         public void Initialise()
@@ -28,6 +30,7 @@ namespace Bunnings.Website.Test.AutomationSuite
 
                 //host = test.Properties["web_host"].ToString();
                 host = TestContext.Parameters["web_host"];
+                connStr = TestContext.Parameters["web_db"];
                 d.Navigate().GoToUrl(host);
                 d.Manage().Window.Maximize();
             }
@@ -53,8 +56,6 @@ namespace Bunnings.Website.Test.AutomationSuite
         [Test]
         public void SearchForItem()
         {
-            //ResetContext();
-            
             SearchWidget search = new SearchWidget(d);
             search.SearchForItem("conduit");
             SearchLandingPage landingPage = new SearchLandingPage(d);
@@ -68,7 +69,6 @@ namespace Bunnings.Website.Test.AutomationSuite
         [Test]
         public void CheckRecentSearches()
         {
-            //ResetContext();
             var searchTerm = "bbq";
 
             SearchWidget search = new SearchWidget(d);
@@ -84,12 +84,16 @@ namespace Bunnings.Website.Test.AutomationSuite
         [Test]
         public void UsePopularSearches()
         {
-            //ResetContext();
             SearchWidget search = new SearchWidget(d);
-            search.ClearRecentSearches();
+            var frontEndSearchResults = search.GetPopularSearches();
 
-            
+            // Can do a test where we get the backend info from the DB (or wherever it's stored) and compare against the front end. 
+            // I don't know how this data is stored so I've assumed a SQL db, but I'm sure it's easy enough to pipe in some other one.
+            DbQueries db = new DbQueries(connStr);
+            var dbSearchResults = db.GetPopularSearchesStubbed(); 
 
+            // This will fail but you will see it output the current popular searches.
+            Assert.AreEqual(frontEndSearchResults, dbSearchResults);
         }
 
 
