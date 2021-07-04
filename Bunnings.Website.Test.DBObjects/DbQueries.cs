@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-namespace Bunnings.Website.Test.AutomationSuite.DBObjs
+namespace Bunnings.Website.Test.DBObjects
 {
     public class DbQueries
     {

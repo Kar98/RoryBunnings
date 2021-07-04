@@ -1,4 +1,5 @@
 ﻿using Bunnings.Website.Test.WebCommon;
+using Bunnings.Website.Test.WebCommon.Ext;
 using Bunnings.Website.Test.WebCommon.Objects;
 using OpenQA.Selenium;
 using System;
@@ -38,11 +39,21 @@ namespace Bunnings.Website.Test.PageObjects.PageObjects
         {
             if (mobile)
             {
-                driver.FindElement(By.XPath("//button[@aria-label='search']"));
+                driver.FindElement(By.XPath("//button[@aria-label='search']")).Click();
+                driver.FindElement(By.Id("flyout"),TimeSpan.FromSeconds(10)); //waitfor
             }
+
             searchBox.SendKeys(itemText);
             Refresh(); // Need to call refresh, because the button is only displayed when text is entered.
-            searchButton.Click();
+            if (mobile)
+            {
+                searchBox.SendKeys(Keys.Enter);
+            }
+            else
+            {
+                searchButton.Click();
+            }
+            
         }
 
         public bool IsRecentSearchMode()

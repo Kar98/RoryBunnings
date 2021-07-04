@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bunnings.Website.Test.WebCommon
+namespace Bunnings.Website.Test.WebCommon.Ext
 {
     public static class IWebDriverEx
     {

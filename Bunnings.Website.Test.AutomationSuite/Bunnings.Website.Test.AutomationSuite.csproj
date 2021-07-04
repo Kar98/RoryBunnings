@@ -67,8 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicTests.cs" />
-    <Compile Include="DBObjs\DbQueries.cs" />
-    <Compile Include="DBObjs\SqlConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +76,10 @@
     <Content Include="Docs\readme.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bunnings.Website.Test.DBObjects\Bunnings.Website.Test.DBObjects.csproj">
+      <Project>{34f038b8-af9e-4bcb-9897-787b23eee83f}</Project>
+      <Name>Bunnings.Website.Test.DBObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bunnings.Website.Test.PageObjects\Bunnings.Website.Test.PageObjects.csproj">
       <Project>{6873f7d0-7f4e-4e58-8044-440e47584360}</Project>
       <Name>Bunnings.Website.Test.PageObjects</Name>

@@ -6,8 +6,8 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
-using Bunnings.Website.Test.AutomationSuite.DBObjs;
 using System.Collections.Generic;
+using Bunnings.Website.Test.DBObjects;
 
 namespace Bunnings.Website.Test.AutomationSuite
 {
